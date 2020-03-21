@@ -100,7 +100,16 @@ fi
 export PATH=${PATH}:${HOME}/.bin:${HOME}/.bin/proxy/apt:${HOME}/.bin/proxy
 
 # PS1 prompt config
-PS1='\[\033[0;32m\]\[\033[0m\033[0;32m\]\u\[\033[0;36m\] @ \[\033[0;36m\]\h \w\[\033[0;32m\]\[$(tput bold)\]$(__git_ps1)\n\[\033[0;32m\] \
-└─\[\033[0m\033[0;32m\] \$\[\033[0m\033[0;32m\] ▶\[\033[0m\] '
+#source /etc/bash_completion.d/git-prompt.sh
+
+function _update_ps1() {
+	if [[ `command -v powerline-shell` ]]; then
+		PS1=$(powerline-shell $?)
+	fi
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
