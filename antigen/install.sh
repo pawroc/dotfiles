@@ -14,4 +14,5 @@ if [[ ! -e "${ANTIGEN_PATH}" ]]; then
   echo -e "${GREEN}Done. Antigen installed in ${ANTIGEN_PATH}"
 else
   echo -e "${GREEN}You already have antigen installed in '${ANTIGEN_PATH}'${RESET_COLORS}"
+  exit 1
 fi

@@ -8,6 +8,7 @@ source "${SCRIPT_DIR}/../bash/colors.sh"
 echo -e "${YELLOW}Checking zsh...${RESET_COLORS}"
 if ! command -v zsh &>/dev/null; then
   echo -e "${RED}zsh is not installed. Install it first and run script again${RESET_COLORS}"
+  exit 1
 fi
 
 if [[ ! -e "${INSTALL_DIR}/.zshrc" ]]; then

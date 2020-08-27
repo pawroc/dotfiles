@@ -10,6 +10,7 @@ source "${SCRIPT_DIR}/../bash/colors.sh"
 echo -e "${YELLOW}Checking fzf...${RESET_COLORS}"
 if ! command -v fzf &>/dev/null; then
   echo -e "${RED}fzf is not installed or not added to PATH. Install it first and run script again${RESET_COLORS}"
+  exit 1
 fi
 
 [[ ! -d ${FZF_DIR} ]] && mkdir -p ${FZF_DIR}
