@@ -1,11 +1,12 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(dirname $(realpath "${BASH_SOURCE[0]}"))"
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 FZF_DIR="${HOME}/.fzf"
 FZF_FILES=("key_bindings.zsh"
-	   "completion.zsh")
+     "completion.zsh")
 
-source "${SCRIPT_DIR}/../bash/colors.sh"
+# shellcheck source=./../bash/colors.sh
+source "${SOURCE_DIR}/../bash/colors.sh"
 
 echo -e "${YELLOW}Checking fzf...${RESET_COLORS}"
 if ! command -v fzf &>/dev/null; then
@@ -13,11 +14,11 @@ if ! command -v fzf &>/dev/null; then
   exit 1
 fi
 
-[[ ! -d ${FZF_DIR} ]] && mkdir -p ${FZF_DIR}
+[[ ! -d ${FZF_DIR} ]] && mkdir -p "${FZF_DIR}"
 
 for file in "${FZF_FILES[@]}"; do
   if [[ ! -e "${FZF_DIR}/${file}" ]]; then
-      ln -sv ${SCRIPT_DIR}/${file} ${FZF_DIR}/${file}
+      ln -sv "${SCRIPT_DIR}/${file}" "${FZF_DIR}/${file}"
   fi
 done
 

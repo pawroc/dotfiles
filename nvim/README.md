@@ -10,4 +10,14 @@ You have to install:
 * nodejs
 * npm
 
+### Coc-clangd
+
+* clangd
+
 Full description could be found [here](https://github.com/neoclide/coc.nvim).
+
+### Coc-python
+
+Packages installed via `python-pip` (or `python3-pip`)
+* python-language-server
+* pylint

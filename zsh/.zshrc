@@ -9,9 +9,11 @@ source ${HOME}/.bin/antigen.zsh
 # Load Antigen configurations
 antigen init ~/.antigenrc
 
-# Editor setups
+
+# Global variables setup
 # --------------
 export EDITOR="vim"
+export PATH=${PATH}:${HOME}/.local/bin
 
 # Ctrl + p
 # --------------
