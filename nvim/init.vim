@@ -233,7 +233,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
 
-    let g:airline_theme='simple'
+    let g:airline_theme='ravenpower'
     let g:airline_powerline_fonts = 1
     " Automatically displays all buffers when there's only one tab open
     let g:airline#extensions#tabline#enabled = 1
