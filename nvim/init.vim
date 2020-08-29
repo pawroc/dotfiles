@@ -1,4 +1,4 @@
-"tGeneral {{{
+"General {{{
 
 " Apperance
 set number
@@ -162,6 +162,20 @@ call plug#begin('~/.vim/plugged')
     nmap <leader>st :Startify<cr>
   " }}}
 
+  " vim-ctrlspace {{{
+  " Fuzzy search engine for tabs / buffers / files / bookmarks
+    Plug 'vim-ctrlspace/vim-ctrlspace'
+
+    set nocompatible
+    set hidden
+    set encoding=UTF-8
+    " turnes off tabline
+    set showtabline=0
+
+    " Neovim requires this
+    let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+  " }}}
+
   " NERDTree {{{
         Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
         Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -220,7 +234,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'vim-airline/vim-airline-themes'
 
     let g:airline_theme='simple'
-    set guifont=DroidSansMonoForPowerlinePlusNerdFileTypesMono,Droid\ Sans\ Mono\ Nerd\ Font\ Complete\ Mono
+    let g:airline_powerline_fonts = 1
+    " Automatically displays all buffers when there's only one tab open
+    let g:airline#extensions#tabline#enabled = 1
+    set guifont=DroidSansMonoForPowerlinePlusNerdFileTypesMono,PowerlineExtraSymbols
+    "set guifont=DroidSansMono\ Nerd\ Font\ 12
+    "let g:airline_left_sep = "\uE0B4"
+    "let g:airline_right_sep = "\uE0B6"
 
   " }}}
 
