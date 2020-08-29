@@ -2,6 +2,7 @@
 
 SCRIPT_DIR="$(dirname $(realpath "${BASH_SOURCE[0]}"))"
 
+# shellcheck source=./bash/colors.sh
 source "${SCRIPT_DIR}/bash/colors.sh"
 
 echo -e "${YELLOW}Installing bash colors...${RESET_COLORS}"

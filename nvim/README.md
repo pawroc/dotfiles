@@ -21,3 +21,9 @@ Full description could be found [here](https://github.com/neoclide/coc.nvim).
 Packages installed via `python-pip` (or `python3-pip`)
 * python-language-server
 * pylint
+
+### Nerd Fonts
+
+1. Download any font from [here](https://github.com/ryanoasis/nerd-fonts),
+2. Install downloaded fonts either to `~/.local/share/fonts` or to `/usr/local/share/fonts`,
+3. Select fonts for your VIM: `set guifont=<name of font>`, e.g. `set guifont=DroidSansMono\ Nerd\ Font\ 12

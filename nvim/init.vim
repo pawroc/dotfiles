@@ -1,7 +1,7 @@
 " General {{{
-set number
 
 " Apperance
+set number
 set autoindent " automatically set indent of new line
 set ttyfast " faster redrawing
 set wildmenu " enhanced command line completion
@@ -13,8 +13,11 @@ set showmatch " show matching braces
 set smarttab " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set expandtab
 set softtabstop=4 " edit as if the tabs are 4 characters wide
-set shiftwidth=2 " number of spaces to use for indent and unindent
+set shiftwidth=4 " number of spaces to use for indent and unindent
 set tabstop=4 " the visible width of tabs
+
+" Tab indentation for particular filetypes
+autocmd FileType sh,vim,zsh setlocal shiftwidth=2 tabstop=2
 
 "Enable mouse click for nvim
 if has('mouse')
@@ -52,7 +55,15 @@ set list listchars=tab:▷·,trail:·,eol:↵,space:·,extends:◣,precedes:◢
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
+  " Color scheme
   Plug 'gruvbox-community/gruvbox'
+
+  " vim-airline {{{
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    let g:airline_theme='deus'
+    
+  " }}}
 
 " coc {{{
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -70,46 +81,119 @@ call plug#begin('~/.vim/plugged')
     \ ]
 
   " coc-git }}}
-  nmap [g <Plug>(coc-git-prevchunk)
-  nmap ]g <Plug>(coc-git-nextchunk)
-  nmap gs <Plug>(coc-git-chunkinfo)
-  nmap gu :CocCommand git.chunkUndo<cr>
+    nmap [g <Plug>(coc-git-prevchunk)
+    nmap ]g <Plug>(coc-git-nextchunk)
+    nmap gs <Plug>(coc-git-chunkinfo)
+    nmap gu :CocCommand git.chunkUndo<cr>
   " }}}
 
   nmap <silent> <leader>k :CocCommand explorer<cr>
 
   " coc-clangd {{{
-  nmap <leader>h :CocCommand clangd.switchSourceHeader<cr>
-  nmap <leader>si :CocCommand clangd.symbolInfo<cr>
+    nmap <leader>h :CocCommand clangd.switchSourceHeader<cr>
+    nmap <leader>si :CocCommand clangd.symbolInfo<cr>
   " }}}
 
   " UltiSnips {{{
-  Plug 'SirVer/ultisnips' " Snippets plugin
-  let g:UltiSnipsExpandTrigger="<C-l>"
-  let g:UltiSnipsJumpForwardTrigger="<C-j>"
-  let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+    Plug 'SirVer/ultisnips' " Snippets plugin
+    let g:UltiSnipsExpandTrigger="<C-l>"
+    let g:UltiSnipsJumpForwardTrigger="<C-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-k>"
   " }}}
 
   " Gotos instructions {{{
-  nmap <silent> gd <Plug>(coc-definition)
-  nmap <silent> gdec <Plug>(coc-declaration)
-  nmap <silent> gy <Plug>(coc-type-definition)
-  nmap <silent> gi <Plug>(coc-implementation)
-  nmap <silent> gr <Plug>(coc-references)
-  nmap <silent> gh <Plug>(coc-doHover)
+    nmap <silent> gd <Plug>(coc-definition)
+    nmap <silent> gdec <Plug>(coc-declaration)
+    nmap <silent> gy <Plug>(coc-type-definition)
+    nmap <silent> gi <Plug>(coc-implementation)
+    nmap <silent> gr <Plug>(coc-references)
+    nmap <silent> gh <Plug>(coc-doHover)
   " }}}
 
   " Refactoring {{{
   nmap re <Plug>(coc-rename)
   nmap ref <Plug>(coc-refactor)
   " }}}
-" }}}
 
+  " Usufeul additions {{{
+  " substitute, search, and abbreviate multiple variants of a word
+  Plug 'tpope/vim-abolish'
+  
+  " easy commenting motions
+  " gc - toggle selected line(s) (comment / uncomment)
+  " :7,17Commentary - comments lines from 7 to 17 ion current buffer
+  " :g/Something/Commentary - comments globally all 'Something' texts
+  Plug 'tpope/vim-commentary'
+  
+  " .editorconfig support
+  Plug 'editorconfig/editorconfig-vim'
+
+  " Startify: Fancy startup screen for vim {{{
+  Plug 'mhinz/vim-startify'
+
+    " Don't change to directory when selecting a file
+    let g:startify_files_number = 5
+    let g:startify_change_to_dir = 0
+    let g:startify_custom_header = [ ]
+    let g:startify_relative_path = 1
+    let g:startify_use_env = 1
+
+    " Custom startup list, only show MRU from current directory/project
+    let g:startify_lists = [
+                \  { 'type': 'dir',       'header': [ 'Files '. getcwd() ] },
+                \  { 'type': function('helpers#startify#listcommits'), 'header': [ 'Recent Commits' ] },
+                \  { 'type': 'sessions',  'header': [ 'Sessions' ]       },
+                \  { 'type': 'bookmarks', 'header': [ 'Bookmarks' ]      },
+                \  { 'type': 'commands',  'header': [ 'Commands' ]       },
+                \ ]
+
+    let g:startify_commands = [
+                \   { 'up': [ 'Update Plugins', ':PlugUpdate' ] },
+                \   { 'ug': [ 'Upgrade Plugin Manager', ':PlugUpgrade' ] },
+                \ ]
+
+    let g:startify_bookmarks = [
+                \ { 'c': '~/.config/nvim/init.vim' },
+                \ { 'g': '~/.gitconfig' },
+                \ { 'z': '~/.zshrc' }
+                \ ]
+
+    autocmd User Startified setlocal cursorline
+    nmap <leader>st :Startify<cr>
+  " }}}
+
+  " NERDTree {{{
+        Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+        Plug 'Xuyuanp/nerdtree-git-plugin'
+        Plug 'ryanoasis/vim-devicons'
+        Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+        " Required by vim-devicons
+        set encoding=UTF-8
+  " }}}
+
+  " Close buffers but keep splits
+  Plug 'moll/vim-bbye'
+  nmap <leader>b :Bdelete<cr>
+
+  " context-aware pasting
+  Plug 'sickill/vim-pasta'
+
+  " }}}
+" }}}
 
 " Initialize plugin system
 call plug#end()
 
+" General Mappings {{{
 
+" clear highlighted search
+noremap <leader>c :set hlsearch! hlsearch?<cr>
+
+" }}}
+
+
+" Color scheme
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
