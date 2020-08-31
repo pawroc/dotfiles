@@ -58,12 +58,40 @@ call plug#begin('~/.vim/plugged')
   " Color scheme
   Plug 'gruvbox-community/gruvbox'
 
-  " vim-airline {{{
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    let g:airline_theme='deus'
-    
+  " Bookmarks {{{
+    Plug 'MattesGroeger/vim-bookmarks'
+
+    " nmap mm <Plug>BookmarkToggle
+    " nmap mi <Plug>BookmarkAnnotate
+    " nmap ma <Plug>BookmarkShowAll
+    " nmap mb <Plug>BookmarkNext
+    " nmap mp <Plug>BookmarkPrev
+    " nmap mc <Plug>BookmarkClear
+    " nmap mx <Plug>BookmarkClearAll
+    " nmap [count]mkk <Plug>BookmarkMoveUp
+    " nmap [count]mjj <Plug>BookmarkMoveDown
+    " nmap [count]mg <Plug>BookmarkMoveToLine
   " }}}
+
+  "" Airline {{{
+   Plug 'vim-airline/vim-airline'
+   Plug 'vim-airline/vim-airline-themes'
+   set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
+
+   let g:airline#extensions#bookmark#enabled = 1
+   let g:airline#extensions#coc#enabled = 1
+
+   let g:airline#extensions#tabline#buffer_nr_show = 1
+   let g:airline_theme='ravenpower'
+   let g:airline_powerline_fonts = 1
+   " Automatically displays all buffers when there's only one tab open
+   let g:airline#extensions#tabline#enabled = 0
+   set guifont=DroidSansMonoForPowerlinePlusNerdFileTypesMono,PowerlineExtraSymbols
+   "set guifont=DroidSansMono\ Nerd\ Font\ 12
+   "let g:airline_left_sep = "\uE0B4"
+   "let g:airline_right_sep = "\uE0B6"
+
+  "" }}}
 
 " coc {{{
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -129,7 +157,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'editorconfig/editorconfig-vim'
 
   " Startify: Fancy startup screen for vim {{{
-  Plug 'mhinz/vim-startify'
+    Plug 'mhinz/vim-startify'
 
     " Don't change to directory when selecting a file
     let g:startify_files_number = 5
@@ -229,20 +257,75 @@ call plug#begin('~/.vim/plugged')
         \ }
   " }}}
 
-  " Airline {{{
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
 
-    let g:airline_theme='ravenpower'
-    let g:airline_powerline_fonts = 1
-    " Automatically displays all buffers when there's only one tab open
-    let g:airline#extensions#tabline#enabled = 1
-    set guifont=DroidSansMonoForPowerlinePlusNerdFileTypesMono,PowerlineExtraSymbols
-    "set guifont=DroidSansMono\ Nerd\ Font\ 12
-    "let g:airline_left_sep = "\uE0B4"
-    "let g:airline_right_sep = "\uE0B6"
+   " vim-fugitive {{{
+        Plug 'tpope/vim-fugitive'
+        nmap <silent> <leader>gs :Gstatus<cr>
+        nmap <leader>ge :Gedit<cr>
+        nmap <silent> <leader>gr :Gread<cr>
+        nmap <silent> <leader>gb :Gblame<cr>
 
-  " }}}
+        "Plug 'tpope/vim-rhubarb' " hub extension for fugitive
+        "Plug 'sodapopcan/vim-twiggy'
+        "Plug 'rbong/vim-flog'
+    " }}}
+
+    " git blame: EnableBlameLine, DisableBlameLine, ToggleBlameLine, SingleBlameLine {{{
+      Plug 'tveskag/nvim-blame-line'
+
+      nnoremap <silent> <leader>bl :ToggleBlameLine<CR>
+
+      " Specify the highlight group used for the virtual text ('Comment' by default)
+      let g:blameLineVirtualTextHighlight = 'Question'
+
+      " Add a prefix to the virtual text (empty by default)
+      let g:blameLineVirtualTextPrefix = '// '
+    " }}}
+
+  " LightLine {{{
+        Plug 'itchyny/lightline.vim'
+        Plug 'mengelbrecht/lightline-bufferline'
+
+        set laststatus=2
+        " let g:lightline = {
+        "     \   'colorscheme': 'wombat',
+        "     \   'active': {
+        "     \       'left': [ [ 'mode', 'paste' ],
+        "     \               [ 'gitbranch' ],
+        "     \               [ 'readonly', 'filetype', 'filename' ]],
+        "     \       'right': [ [ 'percent' ], [ 'lineinfo' ],
+        "     \               [ 'fileformat', 'fileencoding' ],
+        "     \               [ 'gitblame', 'currentfunction',  'cocstatus', 'linter_errors', 'linter_warnings' ]]
+        "     \   },
+        "     \   'component_expand': {
+        "     \   },
+        "     \   'component_type': {
+        "     \       'readonly': 'error',
+        "     \       'linter_warnings': 'warning',
+        "     \       'linter_errors': 'error'
+        "     \   },
+        "     \   'component_function': {
+        "     \       'fileencoding': 'helpers#lightline#fileEncoding',
+        "     \       'filename': 'helpers#lightline#fileName',
+        "     \       'fileformat': 'helpers#lightline#fileFormat',
+        "     \       'filetype': 'helpers#lightline#fileType',
+        "     \       'gitbranch': 'helpers#lightline#gitBranch',
+        "     \       'cocstatus': 'coc#status',
+        "     \       'currentfunction': 'helpers#lightline#currentFunction',
+        "     \       'gitblame': 'helpers#lightline#gitBlame'
+        "     \   },
+        "     \   'tabline': {
+        "     \       'left': [ [ 'tabs' ] ],
+        "     \       'right': [ [ 'close' ] ]
+        "     \   },
+        "     \   'tab': {
+        "     \       'active': [ 'filename', 'modified' ],
+        "     \       'inactive': [ 'filename', 'modified' ],
+        "     \   },
+        "     \   'separator': { 'left': '', 'right': '' },
+        "     \   'subseparator': { 'left': '', 'right': '' }
+        " \ }
+    " " }}}
 
   " Close buffers but keep splits
   Plug 'moll/vim-bbye'
