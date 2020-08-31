@@ -122,13 +122,6 @@ call plug#begin('~/.vim/plugged')
     nmap <leader>si :CocCommand clangd.symbolInfo<cr>
   " }}}
 
-  " UltiSnips {{{
-    Plug 'SirVer/ultisnips' " Snippets plugin
-    let g:UltiSnipsExpandTrigger="<C-l>"
-    let g:UltiSnipsJumpForwardTrigger="<C-j>"
-    let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-  " }}}
-
   " Gotos instructions {{{
     nmap <silent> gd <Plug>(coc-definition)
     nmap <silent> gdec <Plug>(coc-declaration)
@@ -142,8 +135,29 @@ call plug#begin('~/.vim/plugged')
   nmap re <Plug>(coc-rename)
   nmap ref <Plug>(coc-refactor)
   " }}}
+" }}} end coc
 
-  " Usufeul additions {{{
+" Useful additions {{{
+  " CtrlP {{{
+  " Press <F5> to purge the cache for the current directory to get new files, remove deleted files and apply new ignore options.
+  " Press <c-f> and <c-b> to cycle between modes.
+  " Press <c-d> to switch to filename only search instead of full path.
+  " Press <c-r> to switch to regexp mode.
+  " Use <c-j>, <c-k> or the arrow keys to navigate the result list.
+  " Use <c-t> or <c-v>, <c-x> to open the selected entry in a new tab or in a new split.
+  " Use <c-n>, <c-p> to select the next/previous string in the prompt's history.
+  " Use <c-y> to create a new file and its parent directories.
+  " Use <c-z> to mark/unmark multiple files and <c-o> to open them.
+    Plug 'ctrlpvim/ctrlp.vim'
+  " }}}
+
+  " UltiSnips {{{
+    Plug 'SirVer/ultisnips' " Snippets plugin
+    let g:UltiSnipsExpandTrigger="<C-l>"
+    let g:UltiSnipsJumpForwardTrigger="<C-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+  " }}}
+
   " substitute, search, and abbreviate multiple variants of a word
   Plug 'tpope/vim-abolish'
   
@@ -154,6 +168,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-commentary'
   
   " .editorconfig support
+  " not used often but useful for projects
   Plug 'editorconfig/editorconfig-vim'
 
   " Startify: Fancy startup screen for vim {{{
@@ -188,7 +203,7 @@ call plug#begin('~/.vim/plugged')
 
     autocmd User Startified setlocal cursorline
     nmap <leader>st :Startify<cr>
-  " }}}
+  " }}} enf of startify
 
   " vim-ctrlspace {{{
   " Fuzzy search engine for tabs / buffers / files / bookmarks
@@ -202,7 +217,7 @@ call plug#begin('~/.vim/plugged')
 
     " Neovim requires this
     let g:CtrlSpaceDefaultMappingKey = "<C-space> "
-  " }}}
+    " }}} end of vim-ctrspace
 
   " NERDTree {{{
         Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -255,7 +270,7 @@ call plug#begin('~/.vim/plugged')
         \ 'Ignored'   : '☒',
         \ "Unknown"   : "?"
         \ }
-  " }}}
+        " }}} end of NERDTree
 
 
    " vim-fugitive {{{
@@ -268,7 +283,7 @@ call plug#begin('~/.vim/plugged')
         "Plug 'tpope/vim-rhubarb' " hub extension for fugitive
         "Plug 'sodapopcan/vim-twiggy'
         "Plug 'rbong/vim-flog'
-    " }}}
+        " }}} end of vim-fugitive
 
     " git blame: EnableBlameLine, DisableBlameLine, ToggleBlameLine, SingleBlameLine {{{
       Plug 'tveskag/nvim-blame-line'
@@ -280,52 +295,7 @@ call plug#begin('~/.vim/plugged')
 
       " Add a prefix to the virtual text (empty by default)
       let g:blameLineVirtualTextPrefix = '// '
-    " }}}
-
-  " LightLine {{{
-        Plug 'itchyny/lightline.vim'
-        Plug 'mengelbrecht/lightline-bufferline'
-
-        set laststatus=2
-        " let g:lightline = {
-        "     \   'colorscheme': 'wombat',
-        "     \   'active': {
-        "     \       'left': [ [ 'mode', 'paste' ],
-        "     \               [ 'gitbranch' ],
-        "     \               [ 'readonly', 'filetype', 'filename' ]],
-        "     \       'right': [ [ 'percent' ], [ 'lineinfo' ],
-        "     \               [ 'fileformat', 'fileencoding' ],
-        "     \               [ 'gitblame', 'currentfunction',  'cocstatus', 'linter_errors', 'linter_warnings' ]]
-        "     \   },
-        "     \   'component_expand': {
-        "     \   },
-        "     \   'component_type': {
-        "     \       'readonly': 'error',
-        "     \       'linter_warnings': 'warning',
-        "     \       'linter_errors': 'error'
-        "     \   },
-        "     \   'component_function': {
-        "     \       'fileencoding': 'helpers#lightline#fileEncoding',
-        "     \       'filename': 'helpers#lightline#fileName',
-        "     \       'fileformat': 'helpers#lightline#fileFormat',
-        "     \       'filetype': 'helpers#lightline#fileType',
-        "     \       'gitbranch': 'helpers#lightline#gitBranch',
-        "     \       'cocstatus': 'coc#status',
-        "     \       'currentfunction': 'helpers#lightline#currentFunction',
-        "     \       'gitblame': 'helpers#lightline#gitBlame'
-        "     \   },
-        "     \   'tabline': {
-        "     \       'left': [ [ 'tabs' ] ],
-        "     \       'right': [ [ 'close' ] ]
-        "     \   },
-        "     \   'tab': {
-        "     \       'active': [ 'filename', 'modified' ],
-        "     \       'inactive': [ 'filename', 'modified' ],
-        "     \   },
-        "     \   'separator': { 'left': '', 'right': '' },
-        "     \   'subseparator': { 'left': '', 'right': '' }
-        " \ }
-    " " }}}
+    " }}} enf of git blame
 
   " Close buffers but keep splits
   Plug 'moll/vim-bbye'
@@ -334,8 +304,7 @@ call plug#begin('~/.vim/plugged')
   " context-aware pasting
   Plug 'sickill/vim-pasta'
 
-  " }}}
-" }}}
+" }}} end of useful additions
 
 " Initialize plugin system
 call plug#end()
