@@ -28,6 +28,10 @@ Packages installed via `python-pip` (or `python3-pip`)
 2. Install downloaded fonts either to `~/.local/share/fonts` or to `/usr/local/share/fonts`,
 3. Select fonts for your VIM: `set guifont=<name of font>`, e.g. `set guifont=DroidSansMono\ Nerd\ Font\ 12`
 
+### FZF
+
+* ripgrep
+
 #### NOTE
 
 Great documentation of powerline could be found [here](https://powerline.readthedocs.io/en/master/configuration.html)

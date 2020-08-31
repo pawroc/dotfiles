@@ -151,6 +151,45 @@ call plug#begin('~/.vim/plugged')
     Plug 'ctrlpvim/ctrlp.vim'
   " }}}
 
+  " FZF {{{
+  " Use following when want to keep fzf update:
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    "Plug '/usr/bin/fzf'
+    Plug 'junegunn/fzf.vim'
+
+    if isdirectory(".git")
+      " if in a git project, use :GFiles
+      nmap <silent> <leader>t :GitFiles --cached --others --exclude-standard<cr>
+    else
+      " otherwise, use :FZF
+      nmap <silent> <leader>t :FZF<cr>
+    endif
+
+    command! FZFMru call fzf#run({
+          \  'source':  v:oldfiles,
+          \  'sink':    'e',
+          \  'options': '-m -x +s',
+          \  'down':    '40%'})
+
+    command! -bang -nargs=* Find call fzf#vim#grep(
+          \ 'rg --column --line-number --no-heading --follow --color=always '.<q-args>.' || true', 1,
+          \ <bang>0 ? fzf#vim#with_preview('up:60%') : fzf#vim#with_preview('right:50%:hidden', '?'), <bang>0)
+    command! -bang -nargs=? -complete=dir Files
+          \ call fzf#vim#files(<q-args>, fzf#vim#with_preview('right:50%', '?'), <bang>0)
+    command! -bang -nargs=? -complete=dir GitFiles
+          \ call fzf#vim#gitfiles(<q-args>, fzf#vim#with_preview('right:50%', '?'), <bang>0)
+
+    function! RipgrepFzf(query, fullscreen)
+      let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+      let initial_command = printf(command_fmt, shellescape(a:query))
+      let reload_command = printf(command_fmt, '{q}')
+      let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+      call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+    endfunction
+
+    command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+  " }}} end of FZF
+
   " UltiSnips {{{
     Plug 'SirVer/ultisnips' " Snippets plugin
     let g:UltiSnipsExpandTrigger="<C-l>"
