@@ -1,6 +1,7 @@
 "General {{{
 
 " Apperance
+syntax on
 set number
 set autoindent " automatically set indent of new line
 set ttyfast " faster redrawing
@@ -343,6 +344,24 @@ call plug#begin('~/.vim/plugged')
   " context-aware pasting
   Plug 'sickill/vim-pasta'
 
+  " Language specific {{{
+    " C++ {{{ 
+      Plug 'bfrg/vim-cpp-modern'
+
+      " Workaround over errors with syntax highlighting of [{}]
+      let c_no_curly_error = 1
+    " }}}
+
+    " JSON {{{
+      Plug 'elzr/vim-json', { 'for': 'json' }
+      let g:vim_json_syntax_conceal = 0
+    " }}}
+    
+    " Dockerfile {{{
+      Plug 'ekalinin/Dockerfile.vim'
+    " }}}
+  " }}} enf of language specific
+
 " }}} end of useful additions
 
 " Initialize plugin system
@@ -356,13 +375,21 @@ noremap <leader>c :set hlsearch! hlsearch?<cr>
 " }}}
 
 
-" Color scheme
-let g:gruvbox_contrast_dark = 'hard'
-if exists('+termguicolors')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-endif
-let g:gruvbox_invert_selection='0'
+" Color scheme {{{
+  let g:gruvbox_contrast_dark = 'hard'
+  if exists('+termguicolors')
+     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
+  let g:gruvbox_invert_selection='0'
 
-colorscheme gruvbox
-set background=dark
+  colorscheme gruvbox
+  set background=dark
+" }}}
+
+" Final configuration {{{
+  " make comments and HTML attributes italic
+  highlight Comment cterm=italic term=italic gui=italic
+  highlight htmlArg cterm=italic term=italic gui=italic
+  highlight xmlAttrib cterm=italic term=italic gui=italic
+" }}}
