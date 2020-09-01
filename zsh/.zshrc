@@ -9,6 +9,8 @@ source ${HOME}/.bin/antigen.zsh
 # Load Antigen configurations
 antigen init ~/.antigenrc
 
+# Source zsh_variables
+[[ -e ${HOME}/.zsh_variables ]] && source ${HOME}/.zsh_variables
 
 # Global variables setup
 # --------------
