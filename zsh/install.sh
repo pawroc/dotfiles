@@ -12,10 +12,14 @@ if ! command -v zsh &>/dev/null; then
   exit 1
 fi
 
-if [[ ! -e "${INSTALL_DIR}/.zshrc" ]]; then
-  ln -sv "${SCRIPT_DIR}/.zshrc" "${INSTALL_DIR}/.zshrc"
-else
-  echo -e "You already have .zshrc installed"
-fi
+files_to_be_installed=(".zshrc" ".zsh_variables" ".zsh_aliases")
+
+for file in "${files_to_be_installed[@]}"; do
+  if [[ ! -e "${INSTALL_DIR}/${file}" ]]; then
+    cp "${SCRIPT_DIR}/${file}" "${INSTALL_DIR}/${file}"
+  else
+    echo -e "You already have ${file} installed"
+  fi
+done
 
 echo -e "${GREEN}Done${RESET_COLORS}"
