@@ -192,7 +192,8 @@ call plug#begin('~/.vim/plugged')
   " }}} end of FZF
 
   " UltiSnips {{{
-    Plug 'SirVer/ultisnips' " Snippets plugin
+    Plug 'SirVer/ultisnips' " Snippets engine
+    Plug 'honza/vim-snippets' " Snippets definitions
     let g:UltiSnipsExpandTrigger="<C-l>"
     let g:UltiSnipsJumpForwardTrigger="<C-j>"
     let g:UltiSnipsJumpBackwardTrigger="<C-k>"
@@ -359,6 +360,10 @@ call plug#begin('~/.vim/plugged')
     
     " Dockerfile {{{
       Plug 'ekalinin/Dockerfile.vim'
+    " }}}
+
+    " Bitbake {{{
+      Plug 'kergoth/vim-bitbake'
     " }}}
   " }}} enf of language specific
 
