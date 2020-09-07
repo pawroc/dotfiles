@@ -15,7 +15,7 @@ function fail()
 
 function success()
 {
-  echo -e "${GREEN}SUCCESS!${RESET_COLORS}"
+  echo -e "${GREEN}${1} PASSED${RESET_COLORS}"
 }
 
 function cleanup()
@@ -24,23 +24,58 @@ function cleanup()
 }
 trap cleanup EXIT
 
-function run_cmd()
+function run_install_cmd()
 {
   INSTALL_DIR="${install_dir}" "./install.sh"
 }
 
-function run_test()
+function run_uninstall_cmd()
+{
+  INSTALL_DIR="${install_dir}" "./uninstall.sh"
+}
+
+function check_installed_files()
+{
+  local failed; failed=0
+  local expected_files; expected_files=".zsh*"
+  for file in "${SCRIPT_DIR}"/${expected_files}; do
+    file_name="${file##*/}"
+    [[ -f "${install_dir}/${file_name}" ]] || { fail "File ${file_name} not installed properly"; failed=1; }
+  done
+  return "${failed}"
+}
+
+function check_uninstalled_files()
+{
+  local failed; failed=0
+  for file in "${install_dir}"/.zsh*; do
+    [[ -f "${file}" ]] && { fail "File ${file} not uninstalled properly"; failed=1; }
+  done
+  return "${failed}"
+}
+
+function test_install()
 {
   install_dir=$(mktemp -d)
   local expected_files; expected_files=".zsh*"
 
-  run_cmd
-  tests_failed=""
-  for file in "${SCRIPT_DIR}"/${expected_files}; do
-    file_name="${file##*/}"
-    [[ -f "${install_dir}/${file_name}" ]] || fail "File ${file_name} does not exists"
-  done
-  [[ -z "${tests_failed}" ]] && success
+  run_install_cmd
+  check_installed_files && success "test_install"
 }
 
-run_test
+function test_uninstall()
+{
+  install_dir=$(mktemp -d)
+
+  run_install_cmd
+  run_uninstall_cmd
+  check_uninstalled_files && success "test_uninstall"
+}
+
+function run_tests()
+{
+  test_install
+  test_uninstall
+}
+
+run_tests
