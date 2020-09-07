@@ -5,6 +5,8 @@ set -ueo pipefail
 # shellcheck source=./../bash/colors.sh
 source "${PWD}/../bash/colors.sh"
 
+SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
 function fail()
 {
   >&2 echo -e "${RED}TEST FAILED: ${*} ${RESET_COLORS}"
@@ -22,14 +24,19 @@ function cleanup()
 }
 trap cleanup EXIT
 
+function run_cmd()
+{
+  INSTALL_DIR="${install_dir}" "./install.sh"
+}
+
 function run_test()
 {
   install_dir=$(mktemp -d)
-  expected_files=$(find "${PWD}" -name ".zsh*")
+  local expected_files; expected_files=".zsh*"
 
-  INSTALL_DIR="${install_dir}" "./install.sh"
+  run_cmd
   tests_failed=""
-  for file in "${expected_files[@]}"; do
+  for file in "${SCRIPT_DIR}"/${expected_files}; do
     file="${file##*/}"
     [[ -f "${install_dir}/${file}" ]] || fail "File ${install_dir}/${file} does not exists"
   done
