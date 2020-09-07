@@ -37,8 +37,8 @@ function run_test()
   run_cmd
   tests_failed=""
   for file in "${SCRIPT_DIR}"/${expected_files}; do
-    file="${file##*/}"
-    [[ -f "${install_dir}/${file}" ]] || fail "File ${install_dir}/${file} does not exists"
+    file_name="${file##*/}"
+    [[ -f "${install_dir}/${file_name}" ]] || fail "File ${file_name} does not exists"
   done
   [[ -z "${tests_failed}" ]] && success
 }
