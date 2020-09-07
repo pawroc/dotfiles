@@ -1,2 +1,5 @@
 # Here you can place all environment variables defined by your zsh,
 # e.g export PATH=...
+
+export EDITOR="vim"
+export PATH=${PATH}:${HOME}/.local/bin

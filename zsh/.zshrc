@@ -9,14 +9,13 @@ source ${HOME}/.bin/antigen.zsh
 # Load Antigen configurations
 antigen init ~/.antigenrc
 
-# Source zsh additional setups
-[[ -e ${HOME}/.zsh_variables ]] && source ${HOME}/.zsh_variables
-[[ -e ${HOME}/.zsh_aliases ]] && source ${HOME}/.zsh_aliases
+# Aliases
+# --------------
+[[ -f "${HOME}/.zsh_aliases" ]] && source "${HOME}/.zsh_aliases"
 
 # Global variables setup
 # --------------
-export EDITOR="vim"
-export PATH=${PATH}:${HOME}/.local/bin
+[[ -f "${HOME}/.zsh_variables" ]] && source "${HOME}/.zsh_variables"
 
 # Ctrl + p
 # --------------
@@ -31,7 +30,7 @@ zstyle ':fuzzy-search-and-edit:editor:invocation-format' editor '${EDITOR}'
 # --------------
 
 # Key bindings
-[[ -f "${HOME}/.fzf/key_bindings.zsh" ]] && source ${HOME}/.fzf/key_bindings.zsh
+[[ -f "${HOME}/.fzf/key_bindings.zsh" ]] && source "${HOME}/.fzf/key_bindings.zsh"
 
 # Auto-completion
-[[ $- == *i* ]] && source ${HOME}/.fzf/completion.zsh 2> /dev/null
+[[ $- == *i* ]] && source "${HOME}/.fzf/completion.zsh" 2> /dev/null
