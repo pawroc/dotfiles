@@ -1,7 +1,9 @@
 #!/bin/bash
 
+set -euo pipefail
+
 SCRIPT_DIR="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
-INSTALL_DIR="${HOME}"
+INSTALL_DIR=${INSTALL_DIR:="${HOME}"}
 
 # shellcheck source=./../bash/colors.sh
 source "${SCRIPT_DIR}/../bash/colors.sh"
