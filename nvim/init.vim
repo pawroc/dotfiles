@@ -107,6 +107,7 @@ call plug#begin('~/.vim/plugged')
     \ 'coc-vimlsp',
     \ 'coc-ultisnips',
     \ 'coc-diagnostic',
+    \ 'coc-cmake'
     \ ]
 
   " coc-git }}}
