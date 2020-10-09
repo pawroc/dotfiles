@@ -98,7 +98,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   let g:coc_global_extensions = [
-    \ 'coc-sh',
     \ 'coc-git',
     \ 'coc-explorer',
     \ 'coc-clangd',
@@ -266,6 +265,11 @@ call plug#begin('~/.vim/plugged')
         Plug 'Xuyuanp/nerdtree-git-plugin'
         Plug 'ryanoasis/vim-devicons'
         Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+        Plug 'unkiwii/vim-nerdtree-sync'
+
+        " vim-nerdtree-sync
+        let g:nerdtree_sync_cursorline = 1
+        let g:NERDTreeHighlightCursorline = 1
 
         let g:WebDevIconsOS = 'Darwin'
         let g:WebDevIconsUnicodeDecorateFolderNodes = 1
